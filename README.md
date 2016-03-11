@@ -1,8 +1,6 @@
 # BHA
 
-
-Bash History Analyser or BHA is a simple script written in Python to Analyse your Bash history and show you which commands or programs are more
- recent and which are less.
+Bash History Analyser or BHA is a simple script written in Python to Analyse your Bash history and show you which commands or programs are more recent and which are less.
 
 ###Usage
 Usage is simple: bha [history_file]
@@ -11,7 +9,9 @@ Usage is simple: bha [history_file]
 
 ###Result
 Result of BHA is something like this:
-'''
+
+
+```
 reset: 0.8% (8 of 1003)
 clear: 5.18% (52 of 1003)
 gvim: 0.3% (3 of 1003)
@@ -67,5 +67,5 @@ vim: 1.79% (18 of 1003)
 other commands: 
 cowsay, script, add-apt-repository, yes, jcal, idle, tcc, mono, kde4, konsole, gtk-update-icon-cache-3.0, gshutdown, ascii, vrms, xrdb, cgminer, hexview, sqlite3, apt-key, xsetroot, printf, lincity-ng, sleep, xscreensaver, ip, idle3, firefox, /clear, nasm, ttt, unity, ssh, opensonic, nautilus, virtualbox, env, lsusb, neverputt, software-center, file, tinywm, vi, freeminer, pkill, xfwm4, hexedit, compress, 7z, umount, apt-cache, gnome-system-monitor, busybox, java, 
 % of other: 7.377866400797608 %  ( 74 of 1003 )
+```
 
-'''
