@@ -7,6 +7,13 @@ Usage is simple: bha [history_file]
 
   history_file: path of your bash history file and by default it's ~/.bash_history
 
+### Intsall And Remove
+To install or remove BHA run these commands in directory of BHA:
+```
+chmod +x install.sh
+sudo ./install.sh
+```
+
 ###Result
 Result of BHA is something like this:
 
