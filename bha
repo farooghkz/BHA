@@ -1,0 +1,78 @@
+#!/usr/bin/python3.4
+#Bash History Analyser
+#by Faroogh Karimi Zadeh
+#Under GNU GPL 3+
+#farooghkarimizadeh@gmail.com
+#Github page:
+#github.com/farooghkarimizadeh/bha
+#This software is free software and COMES WITHOUT ANY WARRENTY FROM MAIN AUTHOR
+
+
+import sys
+import os
+
+
+def fexist(path): # file exist
+    try:
+        fs = open(path)
+    except:
+        return 0
+    else:
+        return 1
+
+
+def usage():
+    print('Usage: bha [History_file_path]')
+
+history_file_path = os.path.expanduser('~') + '/.bash_history'
+if len(sys.argv) == 2: history_file_path = sys.argv[1]
+
+fs = open(history_file_path) # opens a File Stream for text reading
+history = fs.read() # reads all what is in file
+fs.close() # closes the file stream (no longer we need it)
+
+history = history.split('\n') # => a list of strings seprated by a new line
+cmds = {} # an empty map
+
+for i in history:
+
+    i = i.split(' ')
+    
+    cmd = ''
+    
+    if i[0] == 'sudo':
+        if len(i) != 1:
+            cmd = i[1]
+    else:
+        cmd = i[0]
+
+    if cmd.startswith("#"): continue
+
+    cmd = cmd.replace('./', '') # './NutC' => 'NutC' :D
+    
+
+    if not(fexist('/bin/' + cmd) or fexist('/usr/bin/' + cmd) or fexist('/usr/games/' + cmd) or fexist('/sbin/' + cmd)): continue
+
+    if cmd not in cmds:
+        cmds[cmd] = 1
+    else:
+        cmds[cmd] += 1
+
+
+total = sum(list(cmds.values())) # {'feh': 2, 'gcc': 1, 'g++': 100} => 103
+
+othercc = 0 # Other Commands Count(anything lower than 0.25%)
+otherc = [] # list of other commands
+for cmd in cmds:
+    percent = (cmds[cmd] / total) * 100
+    if percent < 0.25:
+        othercc += cmds[cmd]
+        otherc.extend([cmd])
+    else:
+        print(cmd + ': ', round(percent, 2), '%', ' (', cmds[cmd], ' of ', total, ')', sep='')
+
+print('other commands: ')
+for i in otherc:
+    print(i, end=', ')
+print()
+print('% of other:', othercc/total*100,  '%', ' (', othercc, 'of', total, ')')
