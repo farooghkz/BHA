@@ -12,7 +12,7 @@ chmod +x install.sh
 sudo ./install.sh
 ```
 ###Usage
-Usage is simple: bha [history_file]
+Usage is simple: `bha [history_file]`
 
   history_file: path of your bash history file and by default it's ~/.bash_history
 
