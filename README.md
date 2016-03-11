@@ -5,17 +5,16 @@ Bash History Analyser or BHA is a simple script written in Python to Analyse you
 ###License
 BHA is free software and it's under GNU GPL 3+ (see LICENSE)
 
-###Usage
-Usage is simple: bha [history_file]
-
-  history_file: path of your bash history file and by default it's ~/.bash_history
-
-### Intsall And Remove
+### Install and Remove
 To install or remove BHA run these commands in directory of BHA:
 ```
 chmod +x install.sh
 sudo ./install.sh
 ```
+###Usage
+Usage is simple: bha [history_file]
+
+  history_file: path of your bash history file and by default it's ~/.bash_history
 
 ###Result
 Result of BHA is something like this:
