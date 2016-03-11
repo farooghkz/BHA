@@ -40,7 +40,7 @@ for i in history:
     
     cmd = ''
     
-    if i[0] == 'sudo':
+    if i[0] == 'sudo': # 'sudo reboot' => 'reboot'
         if len(i) != 1:
             cmd = i[1]
     else:
