@@ -1,16 +1,13 @@
 #!/usr/bin/python3.4
-#Bash History Analyser
+#Bash History Analyser 0.01 NOT COMPLETED!
 #by Faroogh Karimi Zadeh
 #Under GNU GPL 3+
 #farooghkarimizadeh@gmail.com
-#Github page:
 #github.com/farooghkarimizadeh/bha
 #This software is free software and COMES WITHOUT ANY WARRENTY FROM MAIN AUTHOR
 
-
 import sys
 import os
-
 
 def fexist(path): # file exist
     try:
@@ -20,9 +17,23 @@ def fexist(path): # file exist
     else:
         return 1
 
-
 def usage():
     print('Usage: bha [History_file_path]')
+
+def dictsort(adict): # this function sorts a map by its values (uses bubblesort) 
+    keys = list(adict.keys())
+    values = list(adict.values())
+    swaped = 1
+    while swaped:
+        swaped = 0
+        for i in range(len(values)):
+            if i == len(values) - 1: continue
+            if values[i] < values[i+1]:
+                values[i], values[i+1] = values[i+1], values[i]
+                keys[i], keys[i+1] = keys[i+1], keys[i] # swap
+                swaped = 1
+    return [keys, values]
+
 
 history_file_path = os.path.expanduser('~') + '/.bash_history'
 if len(sys.argv) == 2: history_file_path = sys.argv[1]
@@ -34,22 +45,20 @@ fs.close() # closes the file stream (no longer we need it)
 history = history.split('\n') # => a list of strings seprated by a new line
 cmds = {} # an empty map
 
-for i in history:
 
+for i in history:
     i = i.split(' ')
-    
     cmd = ''
     
-    if i[0] == 'sudo': # 'sudo reboot' => 'reboot'
+    if i[0] == 'sudo':
         if len(i) != 1:
             cmd = i[1]
     else:
         cmd = i[0]
 
-    if cmd.startswith("#"): continue
+    if cmd.startswith("#"): continue # because it a comment
 
     cmd = cmd.replace('./', '') # './NutC' => 'NutC' :D
-    
 
     if not(fexist('/bin/' + cmd) or fexist('/usr/bin/' + cmd) or fexist('/usr/games/' + cmd) or fexist('/sbin/' + cmd)): continue
 
@@ -59,20 +68,24 @@ for i in history:
         cmds[cmd] += 1
 
 
-total = sum(list(cmds.values())) # {'feh': 2, 'gcc': 1, 'g++': 100} => 103
+cmds = dictsort(cmds) # {'ls': 125, 'gcc': 10, 'cat': 100} => [['ls', 'cat', 'gcc'], [125, 100, 10]]
 
-othercc = 0 # Other Commands Count(anything lower than 0.25%)
+total = sum(cmds[1]) # [0, 1, 2] => 3
+othercc = 0 # Other Commands Count (anything lower than 0.25%)
 otherc = [] # list of other commands
-for cmd in cmds:
-    percent = (cmds[cmd] / total) * 100
+
+for i in range(len(cmds[0])):
+    cmd = cmds[0][i]
+    count = cmds[1][i]
+    percent = count / total * 100
     if percent < 0.25:
-        othercc += cmds[cmd]
+        othercc += count
         otherc.extend([cmd])
     else:
-        print(cmd + ': ', round(percent, 2), '%', ' (', cmds[cmd], ' of ', total, ')', sep='')
+        print(cmd+': ', round(percent,2), '%', ' (', count, '/', total, ')', sep='')
 
 print('other commands: ')
 for i in otherc:
     print(i, end=', ')
 print()
-print('% of other:', othercc/total*100,  '%', ' (', othercc, 'of', total, ')')
+print('% of other: ', othercc/total*100,  '%', ' (', othercc, '/', total, ')', sep='')
