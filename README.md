@@ -6,9 +6,7 @@ Bash History Analyser or BHA is a simple script written in Python to Analyse you
 BHA is free software and it's under GNU GPL 3+ (see LICENSE)
 
 ###Changes
-* Code is cleaned
-* BHA sorts result by percent of commands
-* now result is more clean
+* Now BHA counts something like this right: `cat -n afile | grep 0 | les`
 
 ###Usage
 Usage is simple: `bha [history_file]`
