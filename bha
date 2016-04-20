@@ -1,10 +1,13 @@
 #!/usr/bin/python3.4
-#Bash History Analyser 0.01 NOT COMPLETED!
+#Bash History Analyser 0.02
 #by Faroogh Karimi Zadeh
-#Under GNU GPL 3+
 #farooghkarimizadeh@gmail.com
-#github.com/farooghkarimizadeh/bha
+
+#Under GNU GPL 3+
 #This software is free software and COMES WITHOUT ANY WARRENTY FROM MAIN AUTHOR
+
+#github.com/farooghkarimizadeh/bha
+#note: i tried to use pep8 standards in this script but sometimes i couldn't.
 
 import sys
 import os
@@ -17,8 +20,19 @@ def fexist(path): # file exist
     else:
         return 1
 
+
+def cexist(command): # command exist
+    if fexist('/bin/' + command) or fexist('/sbin/' + command): return True
+    if fexist('/usr/bin/' + command) or fexist('/usr/games/' + command): return True
+    if fexist('/usr/sbin/' + command): return True
+    if fexist('/usr/local/bin/' + command): return True
+    if fexist('/usr/local/games/' + command): return True
+    return False
+
+
 def usage():
     print('Usage: bha [History_file_path]')
+
 
 def dictsort(adict): # this function sorts a map by its values (uses bubblesort) 
     keys = list(adict.keys())
@@ -35,6 +49,40 @@ def dictsort(adict): # this function sorts a map by its values (uses bubblesort)
     return [keys, values]
 
 
+def excmd(s): # EXtracts CoMMands from a given string
+    # first we delete anything between two "
+    ns = '' # new string
+    inq = False
+    for i in s:
+        if i == '\"': 
+            inq = not inq # toggle
+            continue
+        if not inq: 
+            ns += i
+
+    # then we delete anything between two '
+    fs = '' # final string
+    inq = False
+    for i in ns:
+        if i == '\'':
+            inq = not inq
+            continue
+        if not inq:
+            fs += i
+    cmds = []
+    for i in fs.split(' '):
+        if i.startswith('./'): # we don't count them
+            continue
+        if i.startswith('#'): # we don't count comments
+            continue
+        if i == 'sudo' or i == 'su': # they aren't command.are they?
+            continue
+        if cexist(i):
+            cmds.extend([i])
+
+    return cmds
+
+
 history_file_path = os.path.expanduser('~') + '/.bash_history'
 if len(sys.argv) == 2: history_file_path = sys.argv[1]
 
@@ -47,26 +95,11 @@ cmds = {} # an empty map
 
 
 for i in history:
-    i = i.split(' ')
-    cmd = ''
-    
-    if i[0] == 'sudo':
-        if len(i) != 1:
-            cmd = i[1]
-    else:
-        cmd = i[0]
-
-    if cmd.startswith("#"): continue # because it a comment
-
-    cmd = cmd.replace('./', '') # './NutC' => 'NutC' :D
-
-    if not(fexist('/bin/' + cmd) or fexist('/usr/bin/' + cmd) or fexist('/usr/games/' + cmd) or fexist('/sbin/' + cmd)): continue
-
-    if cmd not in cmds:
-        cmds[cmd] = 1
-    else:
-        cmds[cmd] += 1
-
+    for cmd in excmd(i):
+        if cmd not in cmds:
+            cmds[cmd] = 1
+        else:
+            cmds[cmd] += 1
 
 cmds = dictsort(cmds) # {'ls': 125, 'gcc': 10, 'cat': 100} => [['ls', 'cat', 'gcc'], [125, 100, 10]]
 
