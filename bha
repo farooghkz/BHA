@@ -6,7 +6,7 @@
 #Under GNU GPL 3+
 #This software is free software and COMES WITHOUT ANY WARRENTY FROM MAIN AUTHOR
 
-#github.com/farooghkarimizadeh/bha
+# https://github.com/farooghkz/bha
 #note: i tried to use pep8 standards in this script but sometimes i couldn't.
 
 import sys
@@ -115,10 +115,10 @@ for i in range(len(cmds[0])):
         othercc += count
         otherc.extend([cmd])
     else:
-        print(cmd+': ', round(percent,2), '%', ' (', count, '/', total, ')', sep='')
+        print(cmd + ': ', round(percent,2), '%', ' (', count, '/', total, ')', sep='')
 
 print('other commands: ')
 for i in otherc:
     print(i, end=', ')
 print()
-print('% of other: ', othercc/total*100,  '%', ' (', othercc, '/', total, ')', sep='')
+print('% of other: ', round(othercc/total*100, 2),  '%', ' (', othercc, '/', total, ')', sep='')
