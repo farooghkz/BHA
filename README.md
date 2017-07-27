@@ -8,7 +8,7 @@ It may work with history files of other shells such as the plain `sh` or `zsh`.
 BHA is free software under GNU GPL 3+ (see LICENSE)
 
 ### Changes
-* Now BHA counts something like this right: `cat -n afile | grep 0 | les`
+* Now BHA counts something like this right: `cat -n afile | grep 0 | less
 
 ### Usage
 Usage is simple: `bha [history_file]`
