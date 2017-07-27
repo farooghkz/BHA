@@ -2,8 +2,10 @@
 
 Bash History Analyser or BHA is a simple script written in Python to Analyse your Bash history and show you which commands or programs are more recent and which are less.
 
+It may work with history files of other shells such as the plain `sh` or `zsh`.
+
 ### License
-BHA is free software and it's under GNU GPL 3+ (see LICENSE)
+BHA is free software under GNU GPL 3+ (see LICENSE)
 
 ### Changes
 * Now BHA counts something like this right: `cat -n afile | grep 0 | les`
@@ -15,7 +17,6 @@ Usage is simple: `bha [history_file]`
 
 ### Result
 Result of BHA is something like this:
-
 
 ```
 ls: 25.0% (9/36)
