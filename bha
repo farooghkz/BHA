@@ -1,13 +1,12 @@
-#!/usr/bin/python3.4
-#Bash History Analyser 0.02
-#by Faroogh Karimi Zadeh
-#farooghkarimizadeh@gmail.com
+#!/usr/bin/python3
+# Bash History Analyser
+# by Farooq Karimi Zadeh
+# farooghkarimizadeh@gmail.com
 
-#Under GNU GPL 3+
-#This software is free software and COMES WITHOUT ANY WARRENTY FROM MAIN AUTHOR
+# Under GNU GPLv3+
+# This software is free software and COMES WITHOUT ANY WARRENTY FROM MAIN AUTHOR
 
-# https://github.com/farooghkz/bha
-#note: i tried to use pep8 standards in this script but sometimes i couldn't.
+# https://github.com/farooqkz/bha
 
 import sys
 import os
