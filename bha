@@ -12,20 +12,12 @@ import sys
 import os
 
 def fexist(path): # file exist
-    try:
-        fs = open(path)
-    except:
-        return 0
-    else:
-        return 1
-
+    return os.path.isfile(path)
 
 def cexist(command): # command exist
-    if fexist('/bin/' + command) or fexist('/sbin/' + command): return True
-    if fexist('/usr/bin/' + command) or fexist('/usr/games/' + command): return True
-    if fexist('/usr/sbin/' + command): return True
-    if fexist('/usr/local/bin/' + command): return True
-    if fexist('/usr/local/games/' + command): return True
+    for path in os.environ["PATH"].split(":"):
+        if fexist(path + "/" + command):
+            return True
     return False
 
 
@@ -83,7 +75,8 @@ def excmd(s): # EXtracts CoMMands from a given string
 
 
 history_file_path = os.path.expanduser('~') + '/.bash_history'
-if len(sys.argv) == 2: history_file_path = sys.argv[1]
+if len(sys.argv) == 2:
+    history_file_path = sys.argv[1]
 
 fs = open(history_file_path) # opens a File Stream for text reading
 history = fs.read() # reads all what is in file
