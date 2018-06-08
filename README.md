@@ -1,4 +1,5 @@
 # BHA
+## Moved to https://notabug.org/farooqkz/BHA
 
 Bash History Analyser or BHA is a small script written in Python to Analyse your Bash history and show you which programs are more recent and which are less.
 
